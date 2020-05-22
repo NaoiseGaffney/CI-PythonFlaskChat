@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import Flask, redirect, request, session, render_template, url_for
 
 app = Flask(__name__)
-app.secret_key = "randomstring123"
+app.secret_key = os.getenv("SECRET", "randomstring123")
 messages = []
 
 def add_message(username, message):
@@ -35,4 +35,5 @@ def user(username):
         
     return render_template(url_for("user", username=session["username"]))
 
-app.run(host=os.getenv("IP"), port=(os.getenv("PORT")), debug=True)
+# app.run(host=os.getenv("IP"), port=(os.getenv("PORT")), debug=True)
+app.run(host=os.getenv("IP", "0.0.0.0"), port=(os.getenv("PORT", "5000")), debug=False)
